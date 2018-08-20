@@ -1,0 +1,22 @@
+[abc]
+abc000 ansible_user=hadoop
+abc001 ansible_user=hadoop
+abc002 ansible_user=hadoop
+abc003 ansible_user=hadoop
+abc004 ansible_user=hadoop
+abc005 ansible_user=hadoop
+abc006 ansible_user=hadoop
+
+[abcnamenode]
+abc001 ansible_user=hadoop
+
+[abcsecondarynamenode]
+abc002 ansible_user=hadoop
+
+[abcresourcemanager]
+abc003 ansible_user=hadoop
+
+[abcworkers]
+abc004 ansible_user=hadoop
+abc005 ansible_user=hadoop
+abc006 ansible_user=hadoop
