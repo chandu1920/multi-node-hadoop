@@ -1,0 +1,64 @@
+---
+- hosts: abc
+  tasks:
+  - name: Add user hadoop, if it does not exists
+    user:
+      name: hadoop
+  - name: create directories for hdfs and change permissions
+    file:
+      path: /data1/dfs
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0755
+  - name: create directories for hdfs and change permissions
+    file:
+      path: /data2/dfs
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0755
+  - name: ensure jdk 1.8
+    yum:
+      name: java-1.8.0-openjdk-devel
+  - name: Unarchive Hadoop binaries
+    unarchive:
+      src: http://www-us.apache.org/dist/hadoop/common/hadoop-2.9.1/hadoop-2.9.1.tar.gz
+      dest: /opt
+      remote_src: yes
+      owner: hadoop
+      group: hadoop
+  - name: update path in profile for hadoop executables
+    lineinfile:
+      dest: /home/hadoop/.bash_profile
+      state: present
+      line: 'export PATH=$PATH:/opt/hadoop-2.9.1/bin:/opt/hadoop-2.9.1/sbin'
+  - name: update JAVA_HOME in profile
+    lineinfile:
+      dest: /home/hadoop/.bash_profile
+      state: present
+      line: 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.171-8.b10.el7_5.x86_64'
+  - name: create /etc/hadoop/conf directory with appropriate permissions
+    file:
+      path: /etc/hadoop/conf
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0755
+  - name: update HADOOP_CONF_DIR in profile
+    lineinfile:
+      dest: /home/hadoop/.bash_profile
+      state: present
+      line: 'export HADOOP_CONF_DIR=/etc/hadoop/conf'
+  - name: create /var/log/hadoop directory with appropriate permissions
+    file:
+      path: /var/log/hadoop
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0755
+  - name: update HADOOP_LOG_DIR in profile
+    lineinfile:
+      dest: /home/hadoop/.bash_profile
+      state: present
+      line: 'export HADOOP_LOG_DIR=/var/log/hadoop'
